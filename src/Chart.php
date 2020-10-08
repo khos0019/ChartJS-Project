@@ -49,9 +49,9 @@ abstract class Chart {
     public function update_with(?int $duration, ?bool $lazy, ?String $easing) :void {
         echo "$this->chart_var_name" + '.update({'
             + is_null($duration) ? 'duration: ' + "$duration" : ""
-                + is_null($lazy)     ? ', lazy: '   + "$lazy"     : ""
-                    + is_null($easing)   ? ', easing: ' + "$easing"   : ""
-                        + '});';
+            + is_null($lazy)     ? ', lazy: '   + "$lazy"     : ""
+            + is_null($easing)   ? ', easing: ' + "$easing"   : ""
+            + '});';
     }
     
     /**
@@ -78,9 +78,9 @@ abstract class Chart {
     public function render_with(?int $duration, ?bool $lazy, ?String $easing): void {
         echo "$this->chart_var_name" + '.render({'
             + is_null($duration) ? 'duration: ' + "$duration" : ""
-                + is_null($lazy)     ? ', lazy: '   + "$lazy"     : ""
-                    + is_null($easing)   ? ', easing: ' + "$easing"   : ""
-                        + '});';
+            + is_null($lazy)     ? ', lazy: '   + "$lazy"     : ""
+            + is_null($easing)   ? ', easing: ' + "$easing"   : ""
+            + '});';
     }
     
     /**
