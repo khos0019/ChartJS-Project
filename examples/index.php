@@ -1,7 +1,7 @@
 <?php
 require_once ('Chart.php');
-require_once ('Charts/PieChart.php');
-require_once ('Charts/PieChart/Datarow.php');
+require_once ('Charts/Pie_chart.php');
+require_once ('Charts/Pie_chart/Datarow.php');
 require_once ('Color.php');
 function make_chart() {
     $chart = new PieChart("myChart");
