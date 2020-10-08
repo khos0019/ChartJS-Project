@@ -1,13 +1,14 @@
 <?php
 require_once ('Chart.php');
-require_once ('Charts/Pie_chart.php');
-require_once ('Charts/Pie_chart/Datarow.php');
+require_once ('Charts/PieChart.php');
+require_once ('Charts/PieChart/Datarow.php');
 require_once ('Color.php');
 function make_chart() {
     $chart = new PieChart("myChart");
     $chart->set_responsive(false);
-    $chart->add_data(new Datarow("label0", rand(), Color::rand(), Color::rand()));
-    $chart->add_data(new Datarow("label1", rand(), Color::rand(), Color::rand()));
+    for ($x = rand() % 7 + 3; $x > 0; $x--){
+        $chart->add_data(new Datarow("label" . "$x", rand(), Color::rand(), Color::rand()));
+    }
     $chart->set_label("lb");
     return $chart;
 }
