@@ -1,46 +1,48 @@
 <?php
-require_once ('Chart.php');
-require_once ('Charts/Pie_chart/Datarow.php');
+require_once 'Chart.php';
+require_once 'Charts/Pie_chart/Dataset.php';
+require_once 'Charts/Pie_chart/Datarow.php';
 ?>
 <?php
 
-class PieChart extends Chart {
-    
-    private ?String $label;
-    private ?array  $labels = [];
-    private ?array  $dataset = [];
-    private ?array  $background_colors = [];
-    private ?array  $border_colors = [];
-    private ?int    $border_width;
+/*
+* @author Apurva Patel
+*
+* This class inherits from superclass Chart.
+*/
 
+// The class inherits from Chart
+final class PieChart extends Chart {
+    
+	// A variable called dataset which would hold the array object
+    private ?ArrayObject $dataset;
+	// A variable called label which would hold a string
+    private ?String $label;
+
+	// Constructor
     public function __construct(String $chart_id) {
         parent::__construct($chart_id);
-
+        $this->dataset = new ArrayOfDataset();
     }
     
-    /**
-     * 
-     * @param Datarow $datarow
-     */
-    public function add_data(Datarow $datarow): void {
-        array_push($this->labels, $datarow->label);
-        array_push($this->dataset, $datarow->data);
-        array_push($this->background_colors, $datarow->background_color);
-        array_push($this->border_colors, $datarow->border_color);
+	// Adds one additional dataset
+    public function add_dataset(PieDataSet $dataset): void {
+        $this->dataset->append($dataset);
     }
     
-    /**
+	/**
      * 
-     * {@inheritDoc}
-     * @see Chart::with_data()
+	 *
+     * @param $dataset
      */
-    public function with_data(Datarow $datarow): PieChart {
-        $this->add_data($datarow);
+    public function with_dataset(PieDataset $dataset): Self {
+        $this->add_dataset($dataset);
         return $this;
     }
     
     /**
-     * 
+     * A set label
+	 *
      * @param String $label
      */
     public function set_label(String $label): void {
@@ -48,17 +50,20 @@ class PieChart extends Chart {
     }
     
     /**
-     * 
+     *  
+	 *
      * @param String $label
      * @return PieChart
      */
     public function with_label(String $label): PieChart {
+		// invokes the add_data
         $this->set_label($label);
         return $this;
     }
     
     /**
-     * 
+     * returns 	string label. 
+	 *
      * @return String|NULL
      */
     public function get_label(): ?String {
@@ -78,13 +83,8 @@ class PieChart extends Chart {
         "    type: 'pie'," . "\n" .
         "    label: '" . "$this->label" . "'," . "\n" .
         '    data: {' . "\n" .
-        "        labels: ['" . implode("','", $this->labels) . "']," . "\n" .
-        '        datasets: [{' . "\n" .
-        '            data: [' . implode(',', $this->dataset) . '],' . "\n" .
-        "            backgroundColor: ['" . implode("','", $this->background_colors) . "']," . "\n" .
-        "            borderColor: ['" . implode("','", $this->border_colors) . "']," . "\n" .
-        '            borderWidth: 1' . "\n" .
-        '        }]' . "\n" .
+        "        labels: " . $this->dataset[0]->get_labels() . ",\n" .
+        '        datasets: ' . "$this->dataset" .
         '    },' . "\n" .
         '    options: {' . "\n" .
         (is_null($this->get_responsive()) ? "" : '        responsive: ' . ($this->get_responsive() ? 'true' : 'false') .',' . "\n") .
