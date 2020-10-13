@@ -12,6 +12,17 @@ final class Color {
     }
     
     /**
+     * 
+     * @param int $r
+     * @param int $g
+     * @param int $b
+     * @return Color
+     */
+    public static function rgb(int $r, int $g, int $b): Color {
+        return self::rgba($r, $g, $b, 1);
+    }
+    
+    /**
      *
      * @param int $r
      * @param int $g
@@ -23,8 +34,25 @@ final class Color {
         return new Color($r, $g, $b, $a);
     }
     
-    public static function rand() {
+    /**
+     * 
+     * @return Color
+     */
+    public static function rand(): Color {
         return self::rgba(rand(0, 255), rand(0, 255), rand(0, 255), rand(0, 100)/100);
+    }
+    
+    /**
+     * 
+     * @param string $code
+     * @return Color
+     */
+    public static function hex(string $code): Color {
+        return self::rgb(
+            hexdec(substr($code, 0, 2)),
+            hexdec(substr($code, 2, 2)),
+            hexdec(substr($code, 4, 2))
+        );
     }
     
     /**
