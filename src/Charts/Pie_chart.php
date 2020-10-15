@@ -6,9 +6,9 @@ require_once 'Charts/Pie_chart/Datarow.php';
 <?php
 
 /*
-* @author Apurva Patel
+*  @author Apurva Patel
 *
-* This class inherits from superclass Chart.
+*  This class inherits from superclass Chart.
 */
 
 // The class inherits from Chart
@@ -31,9 +31,9 @@ final class PieChart extends Chart {
     }
     
 	/**
-     * 
+     * The function calls add_dataset method to add new dataset through chain linking of methods
 	 *
-     * @param $dataset
+     * @param ArrayObject $dataset
      */
     public function with_dataset(PieDataset $dataset): Self {
         $this->add_dataset($dataset);
@@ -41,7 +41,7 @@ final class PieChart extends Chart {
     }
     
     /**
-     * A set label
+     * The function sets the label for the chart
 	 *
      * @param String $label
      */
@@ -50,19 +50,19 @@ final class PieChart extends Chart {
     }
     
     /**
-     *  
+     * The function sets the label for the chart and then dataset itself
 	 *
      * @param String $label
      * @return PieChart
      */
     public function with_label(String $label): PieChart {
-		// invokes the add_data
+        //This invokes the set_label
         $this->set_label($label);
         return $this;
     }
     
     /**
-     * returns 	string label. 
+     * A function which returns the string. 
 	 *
      * @return String|NULL
      */
@@ -71,6 +71,7 @@ final class PieChart extends Chart {
     }
     
     /**
+     * The fuction prints out the contents of the pie chart, the values, and the labels
      * 
      * {@inheritDoc}
      * @see Chart::to_string()
