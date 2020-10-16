@@ -25,6 +25,15 @@ final class PieChart extends Chart {
         $this->dataset = new ArrayOfDataset();
     }
     
+    /**
+     * 
+     * @param AbsDatarow $row
+     * @return $this-> dataset
+     */
+    public function add_row(AbsDatarow $row): void {
+        $this->dataset[0]->add_row($row);
+    }
+    
 	// Adds one additional dataset
     public function add_dataset(PieDataSet $dataset): void {
         $this->dataset->append($dataset);
