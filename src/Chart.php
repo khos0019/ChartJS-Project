@@ -25,6 +25,12 @@ abstract class Chart {
     }
     
     /**
+     * Add data row into the chart
+     * @param AbsDatarow $row
+     */
+    public abstract function add_row(AbsDatarow $row): void;
+    
+    /**
      *
      */
     public function destory(): void {
