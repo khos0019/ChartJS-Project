@@ -138,7 +138,7 @@ final class PieDataSet extends Dataset
     /**
      * Getter for the labels
      *
-     * @return labels_cache
+     * @return $this->labels_cache
      */
     public function get_labels(): string
     {
@@ -154,7 +154,7 @@ final class PieDataSet extends Dataset
      *
      * toString method for the datarows values
      *
-     * @return cache
+     * @return $cache
      */
     public function __toString(): String
     {
