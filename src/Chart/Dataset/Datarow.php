@@ -14,7 +14,7 @@ abstract class AbsDatarow {
     /**
      *with_property add two properties
      *@param String $which $value
-     *@return class itself
+     *@return $this itself
      */
     public final function with_property(string $which, $value): Self {
         $this->add_property($which, $value);
@@ -30,7 +30,7 @@ abstract class AbsDatarow {
     }
     /**
      *get all properties value
-     *@return class properties
+     *@return $this->properties
      */
     public final function get_properties(): array {
         return $this->properties;
