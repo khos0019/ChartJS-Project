@@ -22,6 +22,14 @@ final class BarChart extends Chart {
     public function set_label(String $label) {
         $this->label = $label;
     }
-       
+    
+    /**
+     * Adds the dataset to the chart
+     * @param BarDataset $dataset
+     */
+    public function add_dataset(BarDataset $dataset) {
+        $this->dataset = $dataset;
+    }
+        
 }
 ?>
