@@ -40,6 +40,35 @@ final class BarChart extends Chart {
         $this->dataset[0]->add_row($row);
     }
     
-    
+    /**
+     * The fuction prints out the contents of the bar chart, the values, and the labels
+     *
+     * {@inheritDoc}
+     * @see Chart::to_string()
+     */
+    public function __toString(): ?String {
+        return
+        '<script>' . "\n" .
+        "var ctx = document.getElementById('" . $this->get_id() . "').getContext('2d');" . "\n" .
+        'var ' . $this->get_id() . ' = new Chart(ctx, {' . "\n" .
+        "    type: 'bar'," . "\n" .
+        "    label: '" . "$this->label" . "'," . "\n" .
+        '    data: {' . "\n" .
+        "        labels: " . $this->dataset[0]->get_labels() . ",\n" .
+        '        datasets: ' . "$this->dataset" .
+        '    },' . "\n" .
+        '    options: {' . "\n" .
+        (is_null($this->get_responsive()) ? "" : '        responsive: ' . ($this->get_responsive() ? 'true' : 'false') .',' . "\n") .
+        '        scales: {' . "\n" .
+        '            yAxes: [{' . "\n" .
+        '                ticks: {' . "\n" .
+        '                    beginAtZero: true' . "\n" .
+        '                }' . "\n" .
+        '            }]' . "\n" .
+        '        }' . "\n" .
+        '    }' . "\n" .
+        '});' . "\n" .
+        '</script>' . "\n";
+    }
 }
 ?>
