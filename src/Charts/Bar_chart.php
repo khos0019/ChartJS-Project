@@ -30,6 +30,16 @@ final class BarChart extends Chart {
     public function add_dataset(BarDataset $dataset) {
         $this->dataset = $dataset;
     }
-        
+    
+    /**
+     *
+     * @param AbsDatarow $row
+     * @return $this-> dataset
+     */
+    public function add_row(AbsDatarow $row): void {
+        $this->dataset[0]->add_row($row);
+    }
+    
+    
 }
 ?>
