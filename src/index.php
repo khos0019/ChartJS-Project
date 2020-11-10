@@ -69,6 +69,24 @@ function print_chart(): void {
     echo $_SESSION["chart"];
 }
 
+/**
+ * Validate input
+ * @param $value
+ */
+function validate(float $value): void{
+    $number = $value;
+    
+    if (empty($number)){
+        $msg = '<span> class ="error"> Please enter a value </span>';
+    }
+    else if(!is_numeric($number)){
+        $msg = '<span class="error"> Data entered was not numeric</span>';
+    }
+    else {
+        echo "valid";
+    }
+}
+
 echo "<!DOCTYPE html>\n";
 echo "<html>\n";
 echo "<head>\n";
@@ -83,6 +101,7 @@ if (has_chart() || has_input()) {
 // Data presents.
 if (has_chart()) {
     if (has_input()) {
+        validate($_POST["valueInput"]);
         data_entry($_POST["labelInput"], $_POST["valueInput"]);
         unset_input();
     }
@@ -91,6 +110,7 @@ if (has_chart()) {
 // First run.
 else {
     if (has_input()) {
+        validate($_POST["valueInput"]);
         $_SESSION["chart"] = make_chart($_POST["labelInput"], $_POST["valueInput"]);
         print_chart();
         unset_input();
