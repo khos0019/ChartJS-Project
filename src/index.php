@@ -4,6 +4,8 @@ require_once 'Chart/Dataset.php';
 require_once ('Charts/Pie_chart.php');
 require_once ('Charts/Pie_chart/Datarow.php');
 require_once ('Color.php');
+require_once ('Charts/Bar_chart.php');
+require_once ('Charts/Bar_chart/Datarow.php');
 ?>
 <?php
 session_start();
@@ -14,7 +16,7 @@ session_start();
  * @param float $value data for the datarow
  * @return PieChart the chart created
  */
-function make_chart(string $label, float $value) {
+function make_piechart(string $label, float $value) {
     $chart = new PieChart("myChart");
     $chart->set_responsive(false);
     $dataset = new PieDataSet();
@@ -25,13 +27,40 @@ function make_chart(string $label, float $value) {
 }
 
 /**
- * Adds the new row to the chart with the specified label and value.
+ * Creates a Barchart and return it.
+ * @param string $label label of the first datarow
+ * @param float $value data for the datarow
+ * @return Barchart the chart created
+ */
+function make_barchart(string $label, float $value) {
+    $chart = new BarChart("myChart");
+    $chart->set_responsive(false);
+    $dataset = new BarDataSet();
+    $dataset->add_row(new BarDatarow($label, $value, Color::rand()));
+    $chart->add_dataset($dataset);
+    $chart->set_label('Number of Corona Cases Per Country');
+    return $chart;
+}
+
+/**
+ * Adds the new row to the piechart with the specified label and value.
  * @param string $label label for the Datarow to add
  * @param float $value value for the Datarow to add
  */
-function data_entry(string $label, float $value) {
+function data_entry_piechart(string $label, float $value) {
     $_SESSION["chart"]->add_row(
         new PieDatarow($label, $value, Color::rand())
+        );
+}
+
+/**
+ * Adds the new row to the barchart with the specified label and value.
+ * @param string $label label for the Datarow to add
+ * @param float $value value for the Datarow to add
+ */
+function data_entry_barchart(string $label, float $value) {
+    $_SESSION["chart"]->add_row(
+        new BarDataRow($label, $value, Color::rand())
         );
 }
 
@@ -102,8 +131,14 @@ if (has_chart() || has_input()) {
 if (has_chart()) {
     if (has_input()) {
         validate($_POST["valueInput"]);
-        data_entry($_POST["labelInput"], $_POST["valueInput"]);
-        unset_input();
+	   if($_POST["chartSelection"] == "Pie Chart") {
+            data_entry_piechart($_POST["labelInput"], $_POST["valueInput"]);
+        	unset_input();
+	   }
+	   else if($_POST["chartSelection"] == "Bar Chart") {
+		    data_entry_barchart($_POST["labelInput"], $_POST["valueInput"]);
+        	unset_input();
+	   }
     }
     print_chart();
 }
@@ -111,9 +146,16 @@ if (has_chart()) {
 else {
     if (has_input()) {
         validate($_POST["valueInput"]);
-        $_SESSION["chart"] = make_chart($_POST["labelInput"], $_POST["valueInput"]);
-        print_chart();
-        unset_input();
+    	if($_POST["chartSelection"] == "Pie Chart") {
+            	$_SESSION["chart"] = make_piechart($_POST["labelInput"], $_POST["valueInput"]);
+            	print_chart();
+            	unset_input();
+    	}
+    	else if($_POST["chartSelection"] == "Bar Chart") {
+    		$_SESSION["chart"] = make_barchart($_POST["labelInput"], $_POST["valueInput"]);
+            	print_chart();
+            	unset_input();
+    	}
     }
 }
 echo "<form method='post' action='index.php'>\n";
@@ -132,6 +174,21 @@ echo "<label for='valueInput'># of Corona Cases: </label>\n";
 echo "</td>\n";
 echo "<td>\n";
 echo "<input type='text' name='valueInput' id='valueInput' /></br>\n";
+echo "</td>\n";
+echo "</tr>\n";
+echo "<tr>\n";
+echo "<td>\n";
+echo "<label for='chartSelection'>Select a Chart: </label>\n";
+echo "</td>\n";
+echo "<td>\n";
+echo "<select name='chartSelection'>";
+echo "<option>";
+echo "Pie Chart";
+echo "</option>";
+echo "<option>";
+echo "Bar Chart";
+echo "</option>";
+echo "</select>";
 echo "</td>\n";
 echo "</tr>\n";
 echo "<tr>\n";

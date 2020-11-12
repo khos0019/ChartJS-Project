@@ -28,7 +28,7 @@ final class BarChart extends Chart {
      * @param BarDataset $dataset
      */
     public function add_dataset(BarDataset $dataset) {
-        $this->dataset = $dataset;
+        $this->dataset->append($dataset);
     }
     
     /**
