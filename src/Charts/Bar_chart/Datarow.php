@@ -28,7 +28,7 @@ final class BarDatarow extends AbsDatarow {
      * @author Po
      *
      */
-    public function __construct(String $label, int $data, Color $background_color) {
+    public function __construct(String $label, float $data, Color $background_color) {
         $this->add_property(Self::LABEL, $label);
         $this->add_property(Self::DATA, $data);
         $this->add_property(Self::BACKGROUND_COLOR, $background_color);

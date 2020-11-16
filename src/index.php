@@ -98,24 +98,6 @@ function print_chart(): void {
     echo $_SESSION["chart"];
 }
 
-/**
- * Validate input
- * @param $value
- */
-function validate(float $value): void{
-    $number = $value;
-    
-    if (empty($number)){
-        $msg = '<span> class ="error"> Please enter a value </span>';
-    }
-    else if(!is_numeric($number)){
-        $msg = '<span class="error"> Data entered was not numeric</span>';
-    }
-    else {
-        echo "valid";
-    }
-}
-
 echo "<!DOCTYPE html>\n";
 echo "<html>\n";
 echo "<head>\n";
@@ -130,7 +112,6 @@ if (has_chart() || has_input()) {
 // Data presents.
 if (has_chart()) {
     if (has_input()) {
-        validate($_POST["valueInput"]);
 	   if($_POST["chartSelection"] == "Pie Chart") {
             data_entry_piechart($_POST["labelInput"], $_POST["valueInput"]);
         	unset_input();
@@ -145,7 +126,6 @@ if (has_chart()) {
 // First run.
 else {
     if (has_input()) {
-        validate($_POST["valueInput"]);
     	if($_POST["chartSelection"] == "Pie Chart") {
             	$_SESSION["chart"] = make_piechart($_POST["labelInput"], $_POST["valueInput"]);
             	print_chart();
@@ -173,7 +153,7 @@ echo "<td>\n";
 echo "<label for='valueInput'># of Corona Cases: </label>\n";
 echo "</td>\n";
 echo "<td>\n";
-echo "<input type='text' name='valueInput' id='valueInput' /></br>\n";
+echo "<input type='number' step='0.001' required name='valueInput' id='valueInput' /></br>\n";
 echo "</td>\n";
 echo "</tr>\n";
 echo "<tr>\n";
