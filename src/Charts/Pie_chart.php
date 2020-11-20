@@ -100,9 +100,12 @@ final class PieChart extends Chart {
         (is_null($this->get_responsive()) ? "" : '        responsive: ' . ($this->get_responsive() ? 'true' : 'false') .',' . "\n") .
         '        scales: {' . "\n" .
         '            yAxes: [{' . "\n" .
-	'                ticks: {' . "\n" .
-	'                    display: false,' .
+	    '                ticks: {' . "\n" .
+	    '                    display: false,' .
         '                    beginAtZero: true' . "\n" .
+        '                },' . "\n" .
+	    '		        gridLines: {' . "\n" .
+	    '                    display: false,' . "\n" .
         '                }' . "\n" .
         '            }]' . "\n" .
         '        }' . "\n" .
