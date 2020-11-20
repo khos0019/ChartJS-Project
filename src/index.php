@@ -112,10 +112,12 @@ if (has_chart() || has_input()) {
 // Data presents.
 if (has_chart()) {
     if (has_input()) {
+        //If user had created a pie chart.
 	   if($_POST["chartSelection"] == "Pie Chart") {
             data_entry_piechart($_POST["labelInput"], $_POST["valueInput"]);
         	unset_input();
 	   }
+	   //If user had created a bar chart.
 	   else if($_POST["chartSelection"] == "Bar Chart") {
 		    data_entry_barchart($_POST["labelInput"], $_POST["valueInput"]);
         	unset_input();
@@ -126,11 +128,13 @@ if (has_chart()) {
 // First run.
 else {
     if (has_input()) {
+        //If user selects to create a pie chart.
     	if($_POST["chartSelection"] == "Pie Chart") {
             	$_SESSION["chart"] = make_piechart($_POST["labelInput"], $_POST["valueInput"]);
             	print_chart();
             	unset_input();
     	}
+    	//If user selects to create a bar chart.
     	else if($_POST["chartSelection"] == "Bar Chart") {
     		$_SESSION["chart"] = make_barchart($_POST["labelInput"], $_POST["valueInput"]);
             	print_chart();
