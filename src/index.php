@@ -11,6 +11,22 @@ require_once ('Charts/Bar_chart/Datarow.php');
 session_start();
 
 /**
+ * Returns the color input by user.
+ * @return color input by user
+ */
+function getColorInput(): Color {
+    $color = null;
+    if (isset($_POST["colorInput"])) {
+	$color = Color::hex($_POST["colorInput"]);
+	unset($_POST["colorInput"]);
+    }
+    else {
+        $color = Color::rand();
+    }
+    return $color;
+}
+
+/**
  * Creates a PieChart and return it.
  * @param string $label label of the first datarow
  * @param float $value data for the datarow
@@ -20,7 +36,7 @@ function make_piechart(string $label, float $value) {
     $chart = new PieChart("myChart");
     $chart->set_responsive(false);
     $dataset = new PieDataSet();
-    $dataset->add_row(new PieDatarow($label, $value, Color::rand()));
+    $dataset->add_row(new PieDatarow($label, $value, getColorInput()));
     $chart->add_dataset($dataset);
     $chart->set_label('Number of Corona Cases Per Country');
     return $chart;
@@ -36,7 +52,7 @@ function make_barchart(string $label, float $value) {
     $chart = new BarChart("myChart");
     $chart->set_responsive(false);
     $dataset = new BarDataSet();
-    $dataset->add_row(new BarDatarow($label, $value, Color::rand()));
+    $dataset->add_row(new BarDatarow($label, $value, getColorInput()));
     $chart->add_dataset($dataset);
     $chart->set_label('Number of Corona Cases Per Country');
     return $chart;
@@ -49,8 +65,8 @@ function make_barchart(string $label, float $value) {
  */
 function data_entry_piechart(string $label, float $value) {
     $_SESSION["chart"]->add_row(
-        new PieDatarow($label, $value, Color::rand())
-        );
+        new PieDatarow($label, $value, getColorInput())
+    );
 }
 
 /**
@@ -60,8 +76,8 @@ function data_entry_piechart(string $label, float $value) {
  */
 function data_entry_barchart(string $label, float $value) {
     $_SESSION["chart"]->add_row(
-        new BarDataRow($label, $value, Color::rand())
-        );
+        new BarDataRow($label, $value, getColorInput())
+    );
 }
 
 /**
@@ -113,15 +129,15 @@ if (has_chart() || has_input()) {
 if (has_chart()) {
     if (has_input()) {
         //If user had created a pie chart.
-	   if($_POST["chartSelection"] == "Pie Chart") {
+        if($_POST["chartSelection"] == "Pie Chart") {
             data_entry_piechart($_POST["labelInput"], $_POST["valueInput"]);
-        	unset_input();
-	   }
-	   //If user had created a bar chart.
-	   else if($_POST["chartSelection"] == "Bar Chart") {
-		    data_entry_barchart($_POST["labelInput"], $_POST["valueInput"]);
-        	unset_input();
-	   }
+            unset_input();
+        }
+        //If user had created a bar chart.
+        else if($_POST["chartSelection"] == "Bar Chart") {
+            data_entry_barchart($_POST["labelInput"], $_POST["valueInput"]);
+            unset_input();
+        }
     }
     print_chart();
 }
@@ -129,17 +145,17 @@ if (has_chart()) {
 else {
     if (has_input()) {
         //If user selects to create a pie chart.
-    	if($_POST["chartSelection"] == "Pie Chart") {
-            	$_SESSION["chart"] = make_piechart($_POST["labelInput"], $_POST["valueInput"]);
-            	print_chart();
-            	unset_input();
-    	}
-    	//If user selects to create a bar chart.
-    	else if($_POST["chartSelection"] == "Bar Chart") {
-    		$_SESSION["chart"] = make_barchart($_POST["labelInput"], $_POST["valueInput"]);
-            	print_chart();
-            	unset_input();
-    	}
+        if($_POST["chartSelection"] == "Pie Chart") {
+            $_SESSION["chart"] = make_piechart($_POST["labelInput"], $_POST["valueInput"]);
+            print_chart();
+            unset_input();
+        }
+        //If user selects to create a bar chart.
+        else if($_POST["chartSelection"] == "Bar Chart") {
+            $_SESSION["chart"] = make_barchart($_POST["labelInput"], $_POST["valueInput"]);
+            print_chart();
+            unset_input();
+        }
     }
 }
 echo "<form method='post' action='index.php'>\n";
@@ -160,6 +176,14 @@ echo "<td>\n";
 echo "<input type='number' step='0.001' required name='valueInput' id='valueInput' /></br>\n";
 echo "</td>\n";
 echo "</tr>\n";
+echo "<tr>";
+echo "<td>";
+echo "<label for='colorInput'>Color code:</label>\n";
+echo "</td>";
+echo "<td>";
+echo "<input type='color' name='colorInput' id='colorInput' />";
+echo "</td>";
+echo "</tr>";
 echo "<tr>\n";
 echo "<td>\n";
 echo "<label for='chartSelection'>Select a Chart: </label>\n";
