@@ -38,7 +38,7 @@ function make_piechart(string $label, float $value) {
     $dataset = new PieDataSet();
     $dataset->add_row(new PieDatarow($label, $value, getColorInput()));
     $chart->add_dataset($dataset);
-    $chart->set_label('Number of Corona Cases Per Country');
+    $chart->set_label("Number of Corona Cases Per Country");
     return $chart;
 }
 
@@ -53,8 +53,9 @@ function make_barchart(string $label, float $value) {
     $chart->set_responsive(false);
     $dataset = new BarDataSet();
     $dataset->add_row(new BarDatarow($label, $value, getColorInput()));
+    $dataset->set_label("Number of Corona Cases Per Country");
     $chart->add_dataset($dataset);
-    $chart->set_label('Number of Corona Cases Per Country');
+    $chart->set_label("Number of Corona Cases Per Country");
     return $chart;
 }
 

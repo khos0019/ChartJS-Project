@@ -12,6 +12,7 @@ require_once ('Chart/Dataset/Datarow.php');
  * 
  */
 abstract class Dataset {
+    private String $label = "";
     
     //Rows variable with Data type of ArrayOfDatarow which is found in the abstract datarow class.
     private ArrayOfDatarow $rows;
@@ -19,6 +20,15 @@ abstract class Dataset {
     //Default constructor that creates a new instance of ArrayOfDatarow.
     public function __construct() {
         $this->rows = new ArrayOfDatarow();
+    }
+
+    public function set_label(String $label): Self {
+        $this->label = $label;
+        return $this;
+    }
+
+    public function get_label(): String {
+        return $this->label;
     }
     
     //Adds a new row.
