@@ -12,27 +12,32 @@ session_start();
 
 /**
  * Returns the color input by user.
+ *
  * @return color input by user
  */
-function getColorInput(): Color {
+function getColorInput(): Color
+{
     $color = null;
     if (isset($_POST["colorInput"])) {
-	$color = Color::hex($_POST["colorInput"]);
-	unset($_POST["colorInput"]);
-    }
-    else {
+        $color = Color::hex($_POST["colorInput"]);
+        unset($_POST["colorInput"]);
+    } else {
         $color = Color::rand();
     }
     return $color;
 }
 
 /**
- * Creates a PieChart and return it.
- * @param string $label label of the first datarow
- * @param float $value data for the datarow
+ * Creates a PieChart and return it. Title now available
+ *
+ * @param string $label
+ *            label of the first datarow
+ * @param float $value
+ *            data for the datarow
  * @return PieChart the chart created
  */
-function make_piechart(string $label, float $value) {
+function make_piechart(string $label, float $value)
+{
     $chart = new PieChart("myChart");
     $chart->set_responsive(false);
     $dataset = new PieDataSet();
@@ -43,12 +48,16 @@ function make_piechart(string $label, float $value) {
 }
 
 /**
- * Creates a Barchart and return it.
- * @param string $label label of the first datarow
- * @param float $value data for the datarow
+ * Creates a Barchart and return it. Title now available
+ *
+ * @param string $label
+ *            label of the first datarow
+ * @param float $value
+ *            data for the datarow
  * @return Barchart the chart created
  */
-function make_barchart(string $label, float $value) {
+function make_barchart(string $label, float $value)
+{
     $chart = new BarChart("myChart");
     $chart->set_responsive(false);
     $dataset = new BarDataSet();
@@ -61,49 +70,53 @@ function make_barchart(string $label, float $value) {
 
 /**
  * Adds the new row to the piechart with the specified label and value.
- * @param string $label label for the Datarow to add
- * @param float $value value for the Datarow to add
+ *
+ * @param string $label
+ *            label for the Datarow to add
+ * @param float $value
+ *            value for the Datarow to add
  */
-function data_entry_piechart(string $label, float $value) {
-    $_SESSION["chart"]->add_row(
-        new PieDatarow($label, $value, getColorInput())
-    );
+function data_entry_piechart(string $label, float $value)
+{
+    $_SESSION["chart"]->add_row(new PieDatarow($label, $value, getColorInput()));
 }
 
 /**
  * Adds the new row to the barchart with the specified label and value.
- * @param string $label label for the Datarow to add
- * @param float $value value for the Datarow to add
+ *
+ * @param string $label
+ *            label for the Datarow to add
+ * @param float $value
+ *            value for the Datarow to add
  */
-function data_entry_barchart(string $label, float $value) {
-    $_SESSION["chart"]->add_row(
-        new BarDataRow($label, $value, getColorInput())
-    );
+function data_entry_barchart(string $label, float $value)
+{
+    $_SESSION["chart"]->add_row(new BarDataRow($label, $value, getColorInput()));
 }
 
 /**
- * 
+ *
  * @return bool if input data is available
  */
-function has_input(): bool {
-    return (
-        isset($_POST["labelInput"]) && isset($_POST["valueInput"])
-     && $_POST['labelInput'] != '' && $_POST['valueInput'] != ''
-    );
+function has_input(): bool
+{
+    return (isset($_POST["labelInput"]) && isset($_POST["valueInput"]) && $_POST['labelInput'] != '' && $_POST['valueInput'] != '');
 }
 
 /**
- * 
+ *
  * @return bool if the Chart has been created
  */
-function has_chart(): bool {
+function has_chart(): bool
+{
     return isset($_SESSION["chart"]);
 }
 
 /**
  * Erases all input data from POST.
  */
-function unset_input(): void {
+function unset_input(): void
+{
     unset($_POST["labelInput"]);
     unset($_POST["valueInput"]);
 }
@@ -111,7 +124,8 @@ function unset_input(): void {
 /**
  * Generates the Chart.
  */
-function print_chart(): void {
+function print_chart(): void
+{
     echo $_SESSION["chart"];
 }
 
@@ -129,30 +143,27 @@ if (has_chart() || has_input()) {
 // Data presents.
 if (has_chart()) {
     if (has_input()) {
-        //If user had created a pie chart.
-        if($_POST["chartSelection"] == "Pie Chart") {
+        // If user had created a pie chart.
+        if ($_POST["chartSelection"] == "Pie Chart") {
             data_entry_piechart($_POST["labelInput"], $_POST["valueInput"]);
             unset_input();
-        }
-        //If user had created a bar chart.
-        else if($_POST["chartSelection"] == "Bar Chart") {
+        } // If user had created a bar chart.
+        else if ($_POST["chartSelection"] == "Bar Chart") {
             data_entry_barchart($_POST["labelInput"], $_POST["valueInput"]);
             unset_input();
         }
     }
     print_chart();
-}
-// First run.
+} // First run.
 else {
     if (has_input()) {
-        //If user selects to create a pie chart.
-        if($_POST["chartSelection"] == "Pie Chart") {
+        // If user selects to create a pie chart.
+        if ($_POST["chartSelection"] == "Pie Chart") {
             $_SESSION["chart"] = make_piechart($_POST["labelInput"], $_POST["valueInput"]);
             print_chart();
             unset_input();
-        }
-        //If user selects to create a bar chart.
-        else if($_POST["chartSelection"] == "Bar Chart") {
+        } // If user selects to create a bar chart.
+        else if ($_POST["chartSelection"] == "Bar Chart") {
             $_SESSION["chart"] = make_barchart($_POST["labelInput"], $_POST["valueInput"]);
             print_chart();
             unset_input();
