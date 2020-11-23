@@ -5,11 +5,31 @@ require_once 'Charts/Bar_chart/Datarow.php';
 ?>
 <?php
 
+/**
+ * Description: This class controls everything that will be used for 
+ * creating a bar chart. Also, this class inherits stuff from the superclass,
+ * Chart.
+ * 
+ * @author Navraj, Omar and Limin.
+ *
+ */
 final class BarChart extends Chart {
     
+    /**
+     * An ArrayObject called dataset. 
+     */
     private ?ArrayObject $dataset;
+    
+    /**
+     * A String called label.
+     */
     private ?String $label;
     
+    /**
+     * Description: A single-arg constructor.
+     * 
+     * @param String $chart_id
+     */
     public function __construct(String $chart_id) {
         parent::__construct($chart_id);
         $this->dataset = new ArrayOfDataset();
@@ -28,7 +48,7 @@ final class BarChart extends Chart {
      * @param BarDataset $dataset
      */
     public function add_dataset(BarDataset $dataset) {
-        $this->dataset = $dataset;
+        $this->dataset->append($dataset);
     }
     
     /**

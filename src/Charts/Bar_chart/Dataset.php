@@ -61,9 +61,12 @@ final class BarDataset extends Dataset {
      * @param $arr
      * @return $str
      */
-    private static function print_object(array $arr): string
+    private static function print_object(array $props, array $arr): string
     {
         $str = "{";
+        foreach ($props as $key => $value) {
+            $str = $str . "\n$key: '" . $value . "',";
+        }
         // for each value from datarow, prints it into the string
         foreach ($arr as $key => $values) {
             $str = $str . "\n$key: ['" . implode("','", (array) $values) . "'],";
@@ -86,28 +89,29 @@ final class BarDataset extends Dataset {
     }
     
     /**
-     * This arrange function takes the data arraya and arranges it in order
+     * Converting datarows into key-value pairs in an array.
      *
-     * @param $data
-     * @return $dataset
+     * @param $data $datarows
+     * @return array of key-value pair converted from the given datarow
      */
     private static function arrange(array $data): array
     {
-        // creates a local array
         $dataset = [];
         foreach ($data as $row) {
-            // using using entered array, gets the values and arranges it
-            foreach ($row->get_properties() as $key => $value) {
+	    foreach ($row->get_properties() as $key => $value) {
+                // add the value if key exists
                 if (array_key_exists($key, $dataset)) {
                     array_push($dataset[$key], $value);
-                } else {
+		}
+		// create the entry and add the value
+		else {
                     $dataset[$key] = [
                         $value
                     ];
                 }
             }
         }
-        // returns arranged values
+
         return $dataset;
     }
     
@@ -134,7 +138,10 @@ final class BarDataset extends Dataset {
         $labels = $dataset[BarDatarow::LABEL];
         unset($dataset[BarDatarow::LABEL]);
         // initializes cache with datarow values
-        $this->cache = Self::print_object($dataset);
+	$this->cache = Self::print_object(
+            array("label" => $this->get_label()),
+            $dataset
+        );
         // initializes label variable with label values
         $this->labels_cache = Self::print_array($labels);
     }

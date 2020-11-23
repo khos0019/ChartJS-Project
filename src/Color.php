@@ -49,9 +49,9 @@ final class Color {
      */
     public static function hex(string $code): Color {
         return self::rgb(
-            hexdec(substr($code, 0, 2)),
-            hexdec(substr($code, 2, 2)),
-            hexdec(substr($code, 4, 2))
+            hexdec(substr($code, 1, 2)),
+            hexdec(substr($code, 3, 2)),
+            hexdec(substr($code, 5, 2))
         );
     }
     

@@ -57,7 +57,7 @@ final class PieDatarow extends AbsDatarow {
      * using superclass's add_property method
      *
      */
-    public function __construct(String $label, int $data, Color $background_color) {
+    public function __construct(String $label, float $data, Color $background_color) {
         
         // set label property
         $this->add_property(Self::LABEL, $label); 
