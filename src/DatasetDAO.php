@@ -62,6 +62,32 @@ class DatasetDAO {
         return Self::$DATASET_CTORS[$type];
     }
     
+    /**
+     * 
+     * 
+     * @return array
+     */
+    public function get_dataset_table(): Array {
+        $result = $this->mysqli->query('SELECT LABEL,TYPE FROM Datasets');
+        if (!result) {
+            trigger_error('Invalid query: ' . $this->mysqli->error);
+        }
+        if ($result->num_rows <= 0) {
+            $result->free();
+            return null;
+        }
+        $datasets = Array();
+        while ($row = $result->fetch_assoc()) {
+            $dataset = Self::get_dataset_ctor($row['TYPE'])();
+            foreach ($this->get_datarows($row['LABEL']) as &$datarow) {
+                $dataset->add_row($datarow);
+            }
+            array_push($datasets, $dataset);
+        }
+        $result->free();
+        return $datasets;
+    }
+    
     
 }
 
