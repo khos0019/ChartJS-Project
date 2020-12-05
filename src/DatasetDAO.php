@@ -88,6 +88,53 @@ class DatasetDAO {
         return $datasets;
     }
     
+    /**
+     * 
+     * @param string $label
+     * @return Dataset
+     */
+    public function get_dataset(string $label): Dataset {
+        $result = $this->mysqli->query('SELECT LABEL,TYPE FROM Datasets WHERE LABEL = ' . "'$label'");
+        if (!$result) {
+            trigger_error('Invalid query: ' . $this->mysqli->error);
+        }
+        if ($result->num_rows <= 0) {
+            $result->free();
+            return null;
+        }
+        $dataset = null;
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $result->free();
+            $dataset = Self::get_dataset_ctor($row['TYPE'])();
+            $dataset->set_label($row['LABEL']);
+            foreach ($this->get_datarows($row['LABEL']) as &$datarow) {
+                $dataset->add_row($datarow);
+            }
+        }
+        return $dataset;
+    }
+    /**
+     * 
+     * @param string $type
+     * @param Dataset $dataset
+     */
+    public function add_dataset(string $type, Dataset $dataset) {
+        if (!$this->mysqli->connect_errno) {
+            $stmt = $this->mysqli->prepare(
+                'INSERT INTO Datasets (TYPE,LABEL) VALUES (?,?)'
+                );
+            if ($stmt == false) {
+                trigger_error('Invalid query: ' . $this->mysqli->error);
+            }
+            $label = $dataset->get_label();
+            $stmt->bind_param('ss', $type, $label);
+            $stmt->execute();
+            foreach ($dataset->get_rows() as &$datarow) {
+                $this->add_datarow($type, $dataset->get_label(), $datarow);
+            }
+        }
+    }
     
 }
 
