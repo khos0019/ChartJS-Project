@@ -65,6 +65,29 @@ class DatasetDAO {
     /**
      * 
      * 
+     * @param string $type
+     * @param string $dataset_label
+     * @param AbsDatarow $datarow
+     */
+    private function add_datarow(string $type, string $dataset_label, AbsDatarow $datarow): void {
+        if (!$this->mysqli->connect_errno) {
+            $stmt = $this->mysqli->prepare(
+                'INSERT INTO Datarows (TYPE,LABEL,DATASET_ID,DAT,BG_COLOR) VALUES (?,?,?,?,?)'
+                );
+            if ($stmt == false) {
+                trigger_error('Invalid query: ' . $this->mysqli->error);
+            }
+            $label    = $datarow->get_property(AbsDatarow::LABEL);
+            $data     = $datarow->get_property(AbsDatarow::DATA);
+            $bg_color = $datarow->get_property(AbsDatarow::BACKGROUND_COLOR)->to_hex();
+            $stmt->bind_param('sssds', $type, $label, $dataset_label, $data, $bg_color);
+            $stmt->execute();
+        }
+    }
+    
+    /**
+     * 
+     * 
      * @return array
      */
     public function get_dataset_table(): Array {
