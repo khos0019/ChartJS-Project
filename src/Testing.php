@@ -47,5 +47,23 @@ class Testing extends TestCase
         $this->assertEquals("Canada", $dataset->get_row(0)->get_property("label"));
     }
     
+    /**
+     * This test case verifies that the label entered by the user is displayed
+     * in the Bar chart
+     * 
+     */
+    
+    public function test3_barchart_LabelInput()
+    {
+        $chart = new BarChart("myChart");
+        $chart->set_responsive(false);
+        $dataset = new BarDataset();
+        $dataset->add_row(new BarDatarow("Russia", 3000, Color::rand()));
+        $dataset->set_label("Number of Corona Cases Per Country");
+        $chart->add_dataset($dataset);
+        $chart->set_label("Number of Corona Cases Per Country");
+        $this->assertEquals("Russia", $dataset->get_row(0)->get_property("label"));
+    }
+    
 }
 
