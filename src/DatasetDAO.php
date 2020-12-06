@@ -64,6 +64,34 @@ class DatasetDAO {
     
     /**
      * 
+     * @param string $dataset_label
+     * @return array
+     */
+    
+    private function get_datarows(string $dataset_label): Array {
+        $result = $this->mysqli->query('SELECT LABEL,DAT,TYPE,BG_COLOR FROM Datarows WHERE DATASET_ID = ' . "'$dataset_label'");
+        if (!$result) {
+            trigger_error('Invalid query: ' . $this->mysqli->error);
+        }
+        $datarows = Array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                array_push(
+                    $datarows,
+                    Self::get_datarow_ctor($row['TYPE'])(
+                        $row['LABEL'],
+                        $row['DAT'],
+                        $row['BG_COLOR']
+                        )
+                    );
+            }
+        }
+        $result->free();
+        return $datarows;
+    }
+    
+    /**
+     * 
      * 
      * @param string $type
      * @param string $dataset_label
