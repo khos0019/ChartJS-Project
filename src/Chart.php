@@ -23,6 +23,8 @@ abstract class Chart {
     public function get_id(): String {
         return $this->chart_id;
     }
+
+    public abstract function get_type(): string;
     
     /**
      * Add data row into the chart

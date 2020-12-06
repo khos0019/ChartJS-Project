@@ -2,7 +2,36 @@
 
 abstract class AbsDatarow
 {
-
+    //LABEL static property intialized with value ="label"
+    public const LABEL = "label";
+    
+    //DATA static property intialized with value ="data"
+    public const DATA  = "data";
+    
+    //BACKGROUND_COLOR static property intialized with value ="backgroundColor"
+    public const BACKGROUND_COLOR = "backgroundColor";
+    
+    //BORDER_COLOR static property intialized with value ="borderColor"
+    public const BORDER_COLOR = "borderColor";
+    
+    //BORDER_ALIGN  static property intialized with value ="borderAlign"
+    public const BORDER_ALIGN = "borderAlign";
+    
+    //BORDER_WIDTH static property intialized with value ="borderWidth"
+    public const BORDER_WIDTH = "borderWidth";
+    
+    //HOVER_BACKGROUND_COLOR static property intialized with value ="hoverBackgroundColor"
+    public const HOVER_BACKGROUND_COLOR = "hoverBackgroundColor";
+    
+    //HOVER_BORDER_COLOR static property intialized with value ="hoverBorderColor"
+    public const HOVER_BORDER_COLOR = "hoverBorderColor";
+    
+    //HOVER_BORDER_WIDTH static property intialized with value ="hoverBorderWidth"
+    public const HOVER_BORDER_WIDTH = "hoverBorderWidth";
+    
+    //WEIGHTstatic property intialized with value ="weight"
+    public const WEIGHT = "weight";
+    
     private array $properties = [];
 
     /**

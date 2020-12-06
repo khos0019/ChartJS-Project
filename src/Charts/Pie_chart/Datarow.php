@@ -13,38 +13,6 @@ require_once ('Chart/Dataset/Datarow.php');
  *
  */
 final class PieDatarow extends AbsDatarow {
-    
-    //LABEL static property intialized with value ="label"
-    public const LABEL = "label";  
-    
-    //DATA static property intialized with value ="data"
-    public const DATA  = "data";    
-    
-    //BACKGROUND_COLOR static property intialized with value ="backgroundColor"
-    public const BACKGROUND_COLOR = "backgroundColor";
-    
-    //BORDER_COLOR static property intialized with value ="borderColor"
-    public const BORDER_COLOR = "borderColor";
-    
-    //BORDER_ALIGN  static property intialized with value ="borderAlign"
-    public const BORDER_ALIGN = "borderAlign";
-    
-    //BORDER_WIDTH static property intialized with value ="borderWidth"
-    public const BORDER_WIDTH = "borderWidth";
-    
-    //HOVER_BACKGROUND_COLOR static property intialized with value ="hoverBackgroundColor"
-    public const HOVER_BACKGROUND_COLOR = "hoverBackgroundColor";
-    
-    //HOVER_BORDER_COLOR static property intialized with value ="hoverBorderColor"
-    public const HOVER_BORDER_COLOR = "hoverBorderColor";
-    
-    //HOVER_BORDER_WIDTH static property intialized with value ="hoverBorderWidth"
-    public const HOVER_BORDER_WIDTH = "hoverBorderWidth";
-    
-    //WEIGHTstatic property intialized with value ="weight"
-    public const WEIGHT = "weight";
-    
-    
     /**
      * @author Keyurkumar Patel
      *
@@ -60,17 +28,14 @@ final class PieDatarow extends AbsDatarow {
     public function __construct(String $label, float $data, Color $background_color) {
         
         // set label property
-        $this->add_property(Self::LABEL, $label); 
+        $this->add_property(Self::LABEL, $label);
         
         // set data property
-        $this->add_property(Self::DATA, $data); 
+        $this->add_property(Self::DATA, $data);
        
         // set background_ colour property
-        $this->add_property(Self::BACKGROUND_COLOR, $background_color); 
-        
-        
+        $this->add_property(Self::BACKGROUND_COLOR, $background_color);
     }
-
 }
 
 ?>
