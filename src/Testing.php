@@ -49,7 +49,7 @@ class Testing extends TestCase
     
     /**
      * This test case verifies that the label entered by the user is displayed
-     * in the Bar chart
+     * in the Bar Chart
      * 
      */
     
