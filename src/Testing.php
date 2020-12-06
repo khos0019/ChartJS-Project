@@ -65,5 +65,24 @@ class Testing extends TestCase
         $this->assertEquals("Russia", $dataset->get_row(0)->get_property("label"));
     }
     
+    /**
+     *
+     *This test case verifies that the value entered by the user is displayed
+     * in the Pie data chart
+     *
+     */
+    
+    public function test4_piechart_ValueInput()
+    {
+        $chart = new PieChart("myChart");
+        $chart->set_responsive(false);
+        $dataset = new PieDataSet();
+        $dataset->add_row(new PieDatarow("Canada", 300, Color::rand()));
+        $dataset->set_label("Number of Corona Cases Per Country");
+        $chart->add_dataset($dataset);
+        $chart->set_label("Number of Corona Cases Per Country");
+        $this->assertEquals(300, $dataset->get_row(0)->get_property("data"));
+    }
+    
 }
 
