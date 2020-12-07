@@ -85,6 +85,9 @@ class Testing extends TestCase
         $this->assertEquals(300, $dataset->get_row(0)->get_property("data"));
     }
     
+    /**
+     * A test to check if the records were actually added to the database.
+     */
     public function test5_database_size() {
         
         DatasetDAO::register_datarow_type('bar', function ($label, $data, $color) { return new BarDatarow($label, $data, Color::hex($color)); });
