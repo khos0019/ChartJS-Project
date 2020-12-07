@@ -112,5 +112,16 @@ class Testing extends TestCase
         
     }
     
+    /**
+     * Check that the saved datavalue for the barchart in the database is correct
+     *
+     */
+    public function test6_database_barchartvalue(){
+       
+        DatasetDAO::register_datarow_type('bar', function ($label, $data, $color) { return new BarDatarow($label, $data, Color::hex($color)); });
+        DatasetDAO::register_dataset_type('bar', function () { return new BarDataset(); });
+        $conn = new DatasetDAO("localhost", "root", "");
+        $db_dataset = $conn->get_dataset("Corona Cases");
+        $this->assertEquals(50.0, $db_dataset->get_row(0)->get_property("data"));
+    }
 }
-
