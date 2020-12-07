@@ -22,6 +22,8 @@ abstract class Dataset {
         $this->rows = new ArrayOfDatarow();
     }
 
+    public abstract function get_type(): string;
+
     public function set_label(String $label): Self {
         $this->label = $label;
         return $this;

@@ -25,6 +25,10 @@ final class PieDataSet extends Dataset
         parent::__construct();
     }
 
+    public function get_type(): string {
+        return "pie";
+    }
+
     /**
      *
      * @param invalidate_cache()

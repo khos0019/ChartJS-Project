@@ -1,8 +1,8 @@
 <?php
 
 final class Color {
-    private int $r, $g, $b;
-    private float $a;
+    public int $r, $g, $b;
+    public float $a;
     
     private function __construct($r, $g, $b, $a) {
         $this->r = $r;
@@ -53,6 +53,15 @@ final class Color {
             hexdec(substr($code, 3, 2)),
             hexdec(substr($code, 5, 2))
         );
+    }
+    
+    public function to_hex(): String {
+      return '#' . sprintf('%02x%02x%02x',
+        $this->r,
+        $this->g,
+        $this->b,
+        $this->a
+      );
     }
     
     /**

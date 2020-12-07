@@ -29,6 +29,10 @@ final class BarDataset extends Dataset {
     {
         parent::__construct();
     }
+
+    public function get_type(): string {
+        return "bar";
+    }
     
     /**
      *

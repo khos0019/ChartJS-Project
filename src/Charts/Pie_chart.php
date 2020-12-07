@@ -24,6 +24,10 @@ final class PieChart extends Chart {
         parent::__construct($chart_id);
         $this->dataset = new ArrayOfDataset();
     }
+
+    public function get_type(): string {
+        return "pie";
+    }
     
     /**
      * 
@@ -37,6 +41,10 @@ final class PieChart extends Chart {
 	// Adds one additional dataset
     public function add_dataset(PieDataSet $dataset): void {
         $this->dataset->append($dataset);
+    }
+
+    public function get_datasets(): ?ArrayObject {
+        return $this->dataset;
     }
     
 	/**
@@ -90,7 +98,7 @@ final class PieChart extends Chart {
         '<script>' . "\n" .
         "var ctx = document.getElementById('" . $this->get_id() . "').getContext('2d');" . "\n" .
         'var ' . $this->get_id() . ' = new Chart(ctx, {' . "\n" .
-        "    type: 'pie'," . "\n" .
+        "    type: '" . $this->get_type() . "'," . "\n" .
         "    label: '" . "$this->label" . "'," . "\n" .
         '    data: {' . "\n" .
         "        labels: " . $this->dataset[0]->get_labels() . ",\n" .

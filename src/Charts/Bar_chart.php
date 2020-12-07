@@ -34,6 +34,10 @@ final class BarChart extends Chart {
         parent::__construct($chart_id);
         $this->dataset = new ArrayOfDataset();
     }
+
+    public function get_type(): string {
+        return "bar";
+    }
     
     /**
      * Sets the label of the bar chart
@@ -49,6 +53,10 @@ final class BarChart extends Chart {
      */
     public function add_dataset(BarDataset $dataset) {
         $this->dataset->append($dataset);
+    }
+
+    public function get_datasets(): ?ArrayObject {
+        return $this->dataset;
     }
     
     /**
@@ -71,7 +79,7 @@ final class BarChart extends Chart {
         '<script>' . "\n" .
         "var ctx = document.getElementById('" . $this->get_id() . "').getContext('2d');" . "\n" .
         'var ' . $this->get_id() . ' = new Chart(ctx, {' . "\n" .
-        "    type: 'bar'," . "\n" .
+        "    type: '" . $this->get_type() . "'," . "\n" .
         "    label: '" . "$this->label" . "'," . "\n" .
         '    data: {' . "\n" .
         "        labels: " . $this->dataset[0]->get_labels() . ",\n" .

@@ -1,14 +1,19 @@
 <?php
-require_once ('Chart.php');
+require_once 'Chart.php';
 require_once 'Chart/Dataset.php';
-require_once ('Charts/Pie_chart.php');
-require_once ('Charts/Pie_chart/Datarow.php');
-require_once ('Color.php');
-require_once ('Charts/Bar_chart.php');
-require_once ('Charts/Bar_chart/Datarow.php');
+require_once 'Charts/Pie_chart.php';
+require_once 'Charts/Pie_chart/Datarow.php';
+require_once 'Color.php';
+require_once 'Charts/Bar_chart.php';
+require_once 'Charts/Bar_chart/Datarow.php';
+require_once 'DatasetDAO.php';
 ?>
 <?php
 session_start();
+DatasetDAO::register_datarow_type('pie', function ($label, $data, $color) { return new PieDatarow($label, $data, Color::hex($color)); });
+DatasetDAO::register_dataset_type('pie', function () { return new PieDataset(); });
+DatasetDAO::register_datarow_type('bar', function ($label, $data, $color) { return new BarDatarow($label, $data, Color::hex($color)); });
+DatasetDAO::register_dataset_type('bar', function () { return new BarDataset(); });
 
 /**
  * Returns the color input by user.
@@ -27,6 +32,10 @@ function getColorInput(): Color
     return $color;
 }
 
+function need_ctor($ctor, string $chart_id): Chart {
+    return $ctor($chart_id);
+}
+
 /**
  * Creates a PieChart and return it. Title now available
  *
@@ -38,10 +47,11 @@ function getColorInput(): Color
  */
 function make_piechart(string $label, float $value)
 {
-    $chart = new PieChart("myChart");
+    $chart = need_ctor(function ($chart_id) { return new PieChart($chart_id); }, 'myChart');
     $chart->set_responsive(false);
     $dataset = new PieDataSet();
     $dataset->add_row(new PieDatarow($label, $value, getColorInput()));
+    $dataset->set_label("Number of Corona Cases Per Country");
     $chart->add_dataset($dataset);
     $chart->set_label("Number of Corona Cases Per Country");
     return $chart;
@@ -216,7 +226,15 @@ echo "<td class='right'>\n";
 echo "<input type='submit' value='Submit' />\n";
 echo "</td>\n";
 echo "<td>\n";
-echo "<input type='reset' value='Reset' />";
+echo "<input type='reset' onclick=\"location.href = 'reset_chart.php';\" value='Reset' />";
+echo "</td>\n";
+echo "</tr>\n";
+echo "<tr>\n";
+echo "<td class='right'>\n";
+echo "<button type='button' onclick=\"location.href = 'save_chart.php';\">Save chart</button>\n";
+echo "</td>\n";
+echo "<td>\n";
+echo "<button type='button' onclick=\"location.href = 'load_chart.php';\">Load Chart</button>\n";
 echo "</td>\n";
 echo "</tr>\n";
 echo "</table>\n";
